@@ -1,14 +1,20 @@
-{ stdenv, pkgsBuildBuild, fetchFromGitHub, lib, nix-update-script }:
+{
+  stdenv,
+  pkgsBuildBuild,
+  fetchFromGitHub,
+  lib,
+  nix-update-script,
+}:
 
 let
   generator = pkgsBuildBuild.buildGoModule rec {
     pname = "v2ray-domain-list-community";
-    version = "20241013063848";
+    version = "20241221105938";
     src = fetchFromGitHub {
       owner = "v2fly";
       repo = "domain-list-community";
       rev = version;
-      hash = "sha256-YFsz+fT2LPU4TakQ2V1PtETmnXI5r3qAaERAqM9mX5g=";
+      hash = "sha256-k42qnHQY9bfSjyGGtaqKdIxlvU/C7TiN8sD0AiRQmVU=";
     };
     vendorHash = "sha256-NLh14rXRci4hgDkBJVJDIDvobndB7KYRKAX7UjyqSsg=";
     meta = with lib; {
@@ -20,7 +26,12 @@ let
   };
 in
 stdenv.mkDerivation {
-  inherit (generator) pname version src meta;
+  inherit (generator)
+    pname
+    version
+    src
+    meta
+    ;
   buildPhase = ''
     runHook preBuild
     ${generator}/bin/domain-list-community -datapath $src/data

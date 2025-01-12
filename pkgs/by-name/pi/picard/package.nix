@@ -27,7 +27,7 @@ pythonPackages.buildPythonApplication rec {
   src = fetchFromGitHub {
     owner = "metabrainz";
     repo = "picard";
-    rev = "refs/tags/release-${version}";
+    tag = "release-${version}";
     hash = "sha256-ysHOiX8b9tlUaQDGl4qHUVLrLUF9MUDc4+vOQB76cj4=";
   };
 
@@ -62,7 +62,7 @@ pythonPackages.buildPythonApplication rec {
     pyyaml
   ];
 
-  setupPyGlobalFlags = [ "build" "--disable-autoupdate" "--localedir=$out/share/locale" ];
+  setupPyGlobalFlags = [ "build" "--disable-autoupdate" "--localedir=${placeholder "out"}/share/locale" ];
 
   preCheck = ''
     export HOME=$(mktemp -d)

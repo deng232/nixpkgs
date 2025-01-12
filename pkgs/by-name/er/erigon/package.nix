@@ -1,8 +1,13 @@
-{ lib, buildGoModule, fetchFromGitHub, nix-update-script }:
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+  nix-update-script,
+}:
 
 let
   pname = "erigon";
-  version = "2.60.6";
+  version = "2.61.0";
 in
 buildGoModule {
   inherit pname version;
@@ -11,11 +16,11 @@ buildGoModule {
     owner = "ledgerwatch";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-208gJTLaVEikH92ZDEULPtfnKJyZhZCRCDfCxewABK4=";
+    hash = "sha256-B9FDGBx5ac1v0PqVK/2LhDH2seRthZxtaGu3G9flo0A=";
     fetchSubmodules = true;
   };
 
-  vendorHash = "sha256-TUK7obI1wOXroI1NE1GfIP+NMW909+z92Wpy9B/soY0=";
+  vendorHash = "sha256-bGVHIrICYWyHPgWWgEAIT+J/IIPjcWqTHeuqbT6lung=";
   proxyVendor = true;
 
   # Build errors in mdbx when format hardening is enabled:
@@ -40,14 +45,24 @@ buildGoModule {
   # Enabling silkworm also breaks the build as it requires dynamically linked libraries.
   # If we need it in the future, we should consider packaging silkworm and silkworm-go
   # as depenedencies explicitly.
-  tags = "-tags=nosqlite,noboltdb,nosilkworm";
+  tags = [
+    "nosqlite"
+    "noboltdb"
+    "nosilkworm"
+  ];
 
   passthru.updateScript = nix-update-script { };
 
   meta = with lib; {
     homepage = "https://github.com/ledgerwatch/erigon/";
     description = "Ethereum node implementation focused on scalability and modularity";
-    license = with licenses; [ lgpl3Plus gpl3Plus ];
-    maintainers = with maintainers; [ d-xo happysalada ];
+    license = with licenses; [
+      lgpl3Plus
+      gpl3Plus
+    ];
+    maintainers = with maintainers; [
+      d-xo
+      happysalada
+    ];
   };
 }

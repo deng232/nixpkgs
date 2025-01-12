@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "ncmpcpp";
     repo = "ncmpcpp";
-    rev = "refs/tags/${version}";
+    tag = version;
     sha256 = "sha256-HRJQ+IOQ8xP1QkPlLI+VtDUWaI2m0Aw0fCDWHhgsOLY=";
   };
 
@@ -52,28 +52,30 @@ stdenv.mkDerivation rec {
     pkg-config
   ];
 
-  buildInputs = [
-    boost
-    libmpdclient
-    ncurses
-    readline
-    libiconv
-    icu
-    curl
-  ] ++ lib.optional visualizerSupport fftw
+  buildInputs =
+    [
+      boost
+      libmpdclient
+      ncurses
+      readline
+      libiconv
+      icu
+      curl
+    ]
+    ++ lib.optional visualizerSupport fftw
     ++ lib.optional taglibSupport taglib;
 
   preConfigure =
     ''
       ./autogen.sh
     ''
-    + lib.optionalString stdenv.isDarwin ''
+    + lib.optionalString stdenv.hostPlatform.isDarwin ''
       # std::result_of was removed in c++20 and unusable for clang16
       substituteInPlace ./configure \
         --replace-fail "std=c++20" "std=c++17"
     '';
 
-  meta =  {
+  meta = {
     description = "Featureful ncurses based MPD client inspired by ncmpc";
     homepage = "https://rybczak.net/ncmpcpp/";
     changelog = "https://github.com/ncmpcpp/ncmpcpp/blob/${version}/CHANGELOG.md";

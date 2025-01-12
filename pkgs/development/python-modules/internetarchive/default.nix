@@ -16,16 +16,16 @@
 
 buildPythonPackage rec {
   pname = "internetarchive";
-  version = "5.0.0";
+  version = "5.1.0";
   pyproject = true;
 
-  disabled = pythonOlder "3.8";
+  disabled = pythonOlder "3.9";
 
   src = fetchFromGitHub {
     owner = "jjjake";
     repo = "internetarchive";
-    rev = "refs/tags/v${version}";
-    hash = "sha256-0+tD+CtbR9MdqXH2CXWsXxyr5YM9gToExFnDQZa+gWM=";
+    tag = "v${version}";
+    hash = "sha256-HwE8oEd5ss8HkpuQuUwdfzENYHn2z/QmzvhRIBvo1qA=";
   };
 
   build-system = [ setuptools ];

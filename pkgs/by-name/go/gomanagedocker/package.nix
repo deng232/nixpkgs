@@ -16,15 +16,15 @@ buildGoModule {
   src = fetchFromGitHub {
     owner = "ajayd-san";
     repo = "gomanagedocker";
-    rev = "refs/tags/v${version}";
+    tag = "v${version}";
     hash = "sha256-oM0DCOHdVPJFWgmHF8yeGGo6XvuTCXar7NebM1obahg=";
   };
 
   vendorHash = "sha256-M/jfQWCBrv7hZm450yLBmcjWtNSCziKOpfipxI6U9ak=";
 
   buildInputs =
-    lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.Cocoa ]
-    ++ lib.optionals stdenv.isLinux [ xorg.libX11 ];
+    lib.optionals stdenv.hostPlatform.isDarwin [ darwin.apple_sdk.frameworks.Cocoa ]
+    ++ lib.optionals stdenv.hostPlatform.isLinux [ xorg.libX11 ];
 
   ldflags = [
     "-s"

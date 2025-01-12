@@ -1,22 +1,23 @@
-{ lib
-, buildGoModule
-, fetchFromGitHub
-, testers
-, xq-xml
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+  testers,
+  xq-xml,
 }:
 
 buildGoModule rec {
   pname = "xq";
-  version = "1.2.4";
+  version = "1.3.0";
 
   src = fetchFromGitHub {
     owner = "sibprogrammer";
     repo = "xq";
     rev = "v${version}";
-    hash = "sha256-g1d5sS3tgxP2VRogWG/5OXezDsJuQ6e724te+Oj3r24=";
+    hash = "sha256-KLpf4db3D+SQzbitc9ROO+k/VHggWpwZmwwhV3QVNiE=";
   };
 
-  vendorHash = "sha256-Oy/BBE6qCKJQRNDn6UiBr+/Psgi3A9Eaytmbmjt7eq8=";
+  vendorHash = "sha256-LKkYA0wZ+MQ67Gox2e+iuWSgbxF0daJj7RWLA6C+v+I=";
 
   ldflags = [
     "-s"

@@ -1,17 +1,24 @@
-{ lib, fetchFromGitHub, buildGoModule, installShellFiles, testers, juju }:
+{
+  lib,
+  fetchFromGitHub,
+  buildGoModule,
+  installShellFiles,
+  testers,
+  juju,
+}:
 
 buildGoModule rec {
   pname = "juju";
-  version = "3.5.3";
+  version = "3.6.1";
 
   src = fetchFromGitHub {
     owner = "juju";
     repo = "juju";
     rev = "v${version}";
-    hash = "sha256-PdNUmPfPYqOYEphY0ZlwEikUV/bKSPOGQuAJsi8+g/E=";
+    hash = "sha256-eq7C3F/OJWF/HWMO9I+yTlXeskO1xuTKGhmoNNGQcyM=";
   };
 
-  vendorHash = "sha256-FCN+0Wx2fYQcj5CRgPubAWbGGyVQcSSfu/Om6SUB6TQ=";
+  vendorHash = "sha256-+2MeUq+r0/2I8C/8IVZTxrKIZTS36P/9XHM2X41AZPE=";
 
   subPackages = [
     "cmd/juju"

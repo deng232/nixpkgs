@@ -1,26 +1,21 @@
-{ lib
-, rustPlatform
-, fetchFromGitHub
-, stdenv
-, darwin
+{
+  lib,
+  rustPlatform,
+  fetchFromGitHub,
 }:
 
 rustPlatform.buildRustPackage rec {
   pname = "cargo-mutants";
-  version = "24.9.0";
+  version = "25.0.0";
 
   src = fetchFromGitHub {
     owner = "sourcefrog";
     repo = "cargo-mutants";
     rev = "v${version}";
-    hash = "sha256-fMw3Whyl+zTPpDTdYpwvzMQtSdr42ueEvkdmRI0N2aA=";
+    hash = "sha256-JwRMXFXYXPg/grFqeGIcWpDPI5/wFIldx4ORE8ODyk8=";
   };
 
-  cargoHash = "sha256-+vI/HPw0oe9K0kWpJXGBM0r7oVBh3+RJzSwklaywa54=";
-
-  buildInputs = lib.optionals stdenv.hostPlatform.isDarwin [
-    darwin.apple_sdk.frameworks.SystemConfiguration
-  ];
+  cargoHash = "sha256-8sAyQ858brL6EFW8gRAPrlpSPW7lYrd4dFOyUDOnIaU=";
 
   # too many tests require internet access
   doCheck = false;
