@@ -33,7 +33,7 @@
   uvicorn,
   pydantic,
   aioprometheus,
-  pynvml,
+  nvidia-ml-py,
   openai,
   pyzmq,
   tiktoken,
@@ -55,7 +55,7 @@ let
   cutlass = fetchFromGitHub {
     owner = "NVIDIA";
     repo = "cutlass";
-    rev = "refs/tags/v3.5.1";
+    rev = "refs/tags/v3.6.0";
     sha256 = "sha256-sTGYN+bjtEqQ7Ootr/wvx3P9f8MCDSSj3qyCWjfdLEA=";
   };
 
@@ -71,7 +71,7 @@ let
   vllm-flash-attn = fetchFromGitHub {
     owner = "vllm-project";
     repo = "flash-attention";
-    rev = "5259c586c403a4e4d8bf69973c159b40cc346fb9";
+    rev = "04325b6798bcc326c86fb35af62d05a9c8c8eceb";
     sha256 = "sha256-8ceXZ4/Hudz21IOlBVMtCWGMNHfe4YHwtGRBb9LCUY8=";
     fetchSubmodules = true;
   };
@@ -106,7 +106,7 @@ let
       ];
       dependencies = [
         cupy
-        pynvml
+        nvidia-ml-py
       ];
       env = {
         CUDA_HOME = "${lib.getDev cudaPackages.cuda_nvcc}";
@@ -143,7 +143,7 @@ assert (validTargets.${target} ? null) != null;
 
 buildPythonPackage rec {
   pname = "vllm";
-  version = "0.6.4";
+  version = "0.6.6.post1";
   pyproject = true;
 
   stdenv = if target == "cuda" then cudaPackages.backendStdenv else args.stdenv;
