@@ -8,7 +8,7 @@ let
   };
 
   _getType = value: with lib; if isBool value then types.bool else types.str;
-  _mkOpt = value: lib.mkOption { type = _getType value; default = value; };
+  _mkOpt = value: lib.mkOption { type = _getType value; default = value; description = "";};
   options = lib.attrsets.mapAttrs (lhs: _mkOpt) {
     tun_name = "default";
     tun_ip = "10.0.0.1/24";
@@ -19,7 +19,7 @@ let
     fake_network = "240.0.0.0/4";
     dns_server = "9.9.9.9";
   };
-  configType = with lib.types; attrsOf ( options);
+  configType = with lib.types; nullOr (attrsOf ( lib.types.submodule options));
 in
 {
   options.services.proxy-ns = {
@@ -36,11 +36,14 @@ in
         if ! isNull cfg.config then {
           enable = true;
           source = config_path;
+          target = "proxy-ns/config.json";
         } else
           if ! isNull cfg.configFile then {
             enable = true;
             source = cfg.configFile;
-          } else { };
+            target = "proxy-ns/config.json";
+            } else {enable = false;};
+          #  environment.etc.proxy-ns = null;
       security.wrappers.proxy-ns = {
         source = "${cfg.package}/bin/proxy-ns";
         owner = "root";
