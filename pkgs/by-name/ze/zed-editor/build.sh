@@ -5,7 +5,7 @@ sudo systemctl set-property --runtime nix-daemon.service \
   AllowedCPUs=0-11
 
 
-  nix-build -E '
+  nix-build -j 1 -E '
 let
   pkgs = import <nixpkgs> {};
 in
