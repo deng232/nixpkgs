@@ -1,7 +1,7 @@
 {
   lib,
   stdenv,
-  buildGoModule,
+  buildGo127Module,
   fetchFromGitHub,
   fetchYarnDeps,
   symlinkJoin,
@@ -54,7 +54,7 @@ let
     ];
   };
 
-  core = buildGoModule {
+  core = buildGo127Module {
     pname = "v2raya-core";
     inherit version src;
 
