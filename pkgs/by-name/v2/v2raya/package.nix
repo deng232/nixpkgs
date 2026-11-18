@@ -76,7 +76,7 @@ let
   };
 
 in
-buildGoModule {
+buildGo127Module {
   inherit pname version src;
 
   sourceRoot = "${src.name}/service";
